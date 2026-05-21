@@ -13,6 +13,27 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(10)->create();
+        $electronics = Category::create([
+            'name' => 'Electronics',
+        ]);
+
+        Category::factory()
+            ->count(5)
+            ->childOf($electronics)
+            ->create();
+
+        $books = Category::create([
+            'name' => 'Books',
+        ]);
+
+        Category::factory()
+            ->count(5)
+            ->childOf($books)
+            ->create();
+
+        Category::factory()
+            ->count(5)
+            ->childOf($books->children()->first())
+            ->create();
     }
 }

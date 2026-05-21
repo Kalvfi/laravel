@@ -22,4 +22,14 @@ class CategoryFactory extends Factory
             'parent_id' => null,
         ];
     }
+
+    /**
+     * Indicate that the model should be a child of the given category.
+     */
+    public function childOf(Category $parent): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'parent_id' => $parent->id,
+        ]);
+    }
 }
