@@ -6,16 +6,16 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CategoryTree extends Component
+class ProductList extends Component
 {
-    public $categories;
+    public $products;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($categories)
+    public function __construct($products)
     {
-        $this->categories = $categories;
+        $this->products = $products;
     }
 
     /**
@@ -23,6 +23,6 @@ class CategoryTree extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.category-tree');
+        return view('components.product-list');
     }
 }

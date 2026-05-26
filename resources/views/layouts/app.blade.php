@@ -18,13 +18,32 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 flex flex-row">
 
-        <!-- Sidebars -->
-        <aside class="w-64 bg-white p-4">
-            <h2 class="text-xl font-bold mb-4">Categories</h2>
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white p-4 flex flex-col gap-4">
+            <div>
+                <h2 class="text-xl font-bold mb-4"><a href="{{ route('home') }}">Categories</a></h2>
+                <x-category-tree :categories="$sidebarCategories" />
+            </div>
 
-            @include('components.category-tree', [
-                'categories' => $sidebarCategories,
-            ])
+            @auth
+                <a href="{{ route('cart.index') }}">
+                    Cart
+                </a>
+
+                Logged in as:
+                {{ Auth::user()->name }}
+
+                @if (Auth::user()->is_admin)
+                    <a href="{{ route('admin.dashboard') }}">
+                        Admin
+                    </a>
+                @endif
+            @endauth
+
+            @guest
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            @endguest
         </aside>
 
         <!-- Page Content -->

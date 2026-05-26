@@ -8,9 +8,7 @@
             </a>
 
             @if ($category->children->count())
-                @include('components.category-tree', [
-                    'categories' => $category->children,
-                ])
+                <x-category-tree :categories="$category->children" />
             @endif
 
         </li>
