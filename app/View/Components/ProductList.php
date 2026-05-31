@@ -2,18 +2,23 @@
 
 namespace App\View\Components;
 
+use App\Models\Product;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class ProductList extends Component
 {
-    public $products;
+    /**
+     * @var Collection<int, \App\Models\Product>
+     */
+    public Collection $products;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($products)
+    public function __construct(Collection $products)
     {
         $this->products = $products;
     }

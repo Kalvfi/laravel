@@ -20,11 +20,10 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        $products = $category->products;
+        $category->load(['products', 'children.products']);
 
-        return view('categories.show', [
-            'category' => $category,
-            'products' => $products
-        ]);
+        $products = $category->products->merge($category->children->flatMap->products);
+
+        return view('categories.show', compact('category', 'products'));
     }
 }

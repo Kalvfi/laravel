@@ -20,30 +20,56 @@
 
         <!-- Sidebar -->
         <aside class="w-64 bg-white p-4 flex flex-col gap-4">
+            <div class="flex flex-col gap-4 h-fit">
+
+                <!-- Logged-in User -->
+                @auth
+
+                    <!-- User Information -->
+                    <div class="flex flex-row justify-between">
+                        <p class="flex items-center gap-2">
+                            <x-pixelicon-user /> {{ Auth::user()->name }}
+                        </p>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-2">
+                                <x-pixelicon-logout /> Logout
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Functions -->
+                    <div class="flex flex-row justify-between">
+                        <a href="{{ route('cart.index') }}" class="flex items-center gap-2">
+                            <x-pixelicon-shopping-cart /> Cart
+                        </a>
+
+                        <!-- Admin -->
+                        @if (Auth::user()->is_admin)
+                            <a href="{{ route('admin.index') }}" class="flex items-center gap-2">
+                                <x-pixelicon-edit /> Admin
+                            </a>
+                        @endif
+                    </div>
+                @endauth
+
+                <!-- Guest User -->
+                @guest
+                    <div class="flex flex-row justify-between">
+                        <a href="{{ route('register') }}" class="flex items-center gap-2">
+                            <x-pixelicon-user-plus /> Register
+                        </a>
+                        <a href="{{ route('login') }}" class="flex items-center gap-2">
+                            <x-pixelicon-login /> Login
+                        </a>
+                    </div>
+                @endguest
+            </div>
+            <hr class="border-black" />
             <div>
                 <h2 class="text-xl font-bold mb-4"><a href="{{ route('home') }}">Categories</a></h2>
                 <x-category-tree :categories="$sidebarCategories" />
             </div>
-
-            @auth
-                <a href="{{ route('cart.index') }}">
-                    Cart
-                </a>
-
-                Logged in as:
-                {{ Auth::user()->name }}
-
-                @if (Auth::user()->is_admin)
-                    <a href="{{ route('admin.dashboard') }}">
-                        Admin
-                    </a>
-                @endif
-            @endauth
-
-            @guest
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-            @endguest
         </aside>
 
         <!-- Page Content -->
