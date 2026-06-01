@@ -26,7 +26,7 @@
                 @auth
 
                     <!-- User Information -->
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between items-center gap-4">
                         <p class="flex items-center gap-2">
                             <x-pixelicon-user /> {{ Auth::user()->name }}
                         </p>
@@ -39,7 +39,7 @@
                     </div>
 
                     <!-- Functions -->
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between items-center gap-4">
                         <a href="{{ route('cart.index') }}" class="flex items-center gap-2">
                             <x-pixelicon-shopping-cart /> Cart
                         </a>
@@ -55,7 +55,7 @@
 
                 <!-- Guest User -->
                 @guest
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between items-center gap-4">
                         <a href="{{ route('register') }}" class="flex items-center gap-2">
                             <x-pixelicon-user-plus /> Register
                         </a>
@@ -65,9 +65,14 @@
                     </div>
                 @endguest
             </div>
+
             <hr class="border-black" />
+
             <div>
-                <h2 class="text-xl font-bold mb-4"><a href="{{ route('home') }}">Categories</a></h2>
+                <h2 class="flex justify-between items-center text-xl font-bold mb-2">
+                    Categories <a href="{{ route('home') }}"><x-pixelicon-home /> </a>
+                </h2>
+
                 <x-category-tree :categories="$sidebarCategories" />
             </div>
         </aside>
