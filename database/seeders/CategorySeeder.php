@@ -13,6 +13,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        Category::create([
+            'name' => 'Uncategorized',
+        ]);
+
         $electronics = Category::create([
             'name' => 'Electronics',
         ]);

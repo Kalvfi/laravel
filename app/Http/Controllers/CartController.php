@@ -15,7 +15,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::with('cartItems.product')->where('user_id', Auth::user()->id)->first();
+        $cart = Cart::firstOrCreate(['user_id' => Auth::user()->id])->load('cartItems.product');
         $total = $cart ? $cart->cartItems->sum(fn($item) => $item->product->price * $item->quantity) : 0;
 
         return view('cart.index', compact('cart', 'total'));
@@ -41,15 +41,17 @@ class CartController extends Controller
 
         if ($cartItem) {
             $cartItem->increment('quantity', $quantityToAdd);
+            $message = 'Cart updated!';
         } else {
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $validated['product_id'],
                 'quantity' => $quantityToAdd
             ]);
+            $message = 'Product added to cart!';
         }
 
-        return redirect()->back()->with('success', 'Product added to cart!');
+        return redirect()->back()->with('success', $message ?? 'Cart updated!');
     }
 
     /**

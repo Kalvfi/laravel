@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -36,8 +38,11 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+
+    Route::resource('products', AdminProductController::class)->except(['index', 'show']);
+    Route::resource('categories', AdminCategoryController::class)->except(['index', 'show']);
 });
 
 require __DIR__ . '/auth.php';
